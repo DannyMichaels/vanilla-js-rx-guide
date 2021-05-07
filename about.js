@@ -25,6 +25,7 @@ const renderMeds = () => {
 
 const renderMed = (med) => {
   return `
+  <a href="med-detail.html?${med.id}" style="text-decoration: none; color: inherit;" >
    <div class="med-card" id="med-card-${med.id}">
      <h3>${med.fields.name}</h3>
         <img
@@ -34,6 +35,7 @@ const renderMed = (med) => {
           alt="${med.fields.name}"
         />
        </div>
+       </a>
     `;
 };
 
