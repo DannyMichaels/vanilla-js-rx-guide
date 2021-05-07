@@ -1,3 +1,40 @@
+body {
+  background-color: #fffcdc;
+  background: linear-gradient(90deg, #ffefba, #fff);
+}
+
+.med-card {
+  margin: 20px;
+  border: 1px solid pink;
+  background: #ffccff;
+  box-shadow: 5px 5px peachpuff;
+  width: 250px;
+  max-width: 250px;
+  text-align: center;
+  padding: 20px;
+  transition: transform 300ms ease-out;
+}
+
+.med-card:hover {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1) ease-in;
+}
+.meds-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: row wrap;
+  margin: 10px;
+}
+
+button:before {
+  position: absolute;
+  top: 11px;
+  left: -30px;
+  transition: all 300ms ease;
+}
+
 @keyframes bounce {
   0%,
   20%,

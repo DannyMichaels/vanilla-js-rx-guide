@@ -36,7 +36,7 @@ const fetchAllMeds = async () => {
   };
 };
 
-const createMedCards = (medType) => {
+const PrefillDOMWithMeds = (medType) => {
   const userMedsParentDiv = document.getElementById(
     'home__userMeds--container'
   );
@@ -60,7 +60,19 @@ const createMedCards = (medType) => {
          ? `
       <div>
       <h4>Taken At: </h4>
-      <h5>${med.fields.taken}</h5>
+        <h5 id="med-taken-${med.id}">${med.fields.taken}</h5>
+      <form className="update-med" id="home__medCard--form" data-id=${med.id} >
+          <label htmlFor="taken" type="text">
+            Edit Time:
+          </label>
+          <input
+            name="taken"
+            type="time"
+          />
+          <button className="edit-button" id="home__editMed--button" type="submit">
+            <img src="https://i.imgur.com/SnXF0hi.png" alt="Edit" />
+          </button>
+      </form>
       <button id="home__deleteMed--button">
             <img
                 src="https://i.imgur.com/NhIlDPF.png"
@@ -76,6 +88,37 @@ const createMedCards = (medType) => {
   });
 };
 
+const onUpdateMed = (e) => {
+  e.preventDefault();
+  const editMedCardForm = document.getElementById('home__medCard--form');
+  const timeTakenInput = editMedCardForm.querySelector('input[name="taken"]');
+
+  let foundMed = state.userMeds.find(
+    (med) => med.id === editMedCardForm.dataset.id
+  );
+
+  const updatedMed = {
+    ...foundMed,
+    fields: {
+      ...foundMed.fields,
+      taken: timeTakenInput.value,
+    },
+  };
+
+  editUserMed(updatedMed.fields, updatedMed.id);
+
+  state = {
+    ...state,
+    userMeds: state.userMeds.map((med) =>
+      med.id === updatedMed.id ? updatedMed : med
+    ),
+  };
+
+  const elementToChange = document.getElementById(`med-taken-${updatedMed.id}`);
+
+  elementToChange.innerText = updatedMed.fields.taken;
+};
+
 const onDocumentDidMount = async () => {
   await fetchUserMeds();
   await fetchAllMeds();
@@ -83,7 +126,14 @@ const onDocumentDidMount = async () => {
     ...state,
     medsAreLoading: false,
   };
-  createMedCards('userMeds');
+
+  PrefillDOMWithMeds('userMeds');
+  const editMedCardForm = document.getElementById('home__medCard--form');
+  editMedCardForm.addEventListener('submit', onUpdateMed);
 };
 
 onDocumentDidMount();
+
+const onDocumentWillUpdate = () => {
+  // methods that should and will cause an update to the DOM.
+};

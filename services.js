@@ -64,7 +64,7 @@ const prescribeMed = async (fields) => {
   }
 };
 
-const editMed = async (fields, medId) => {
+const editUserMed = async (fields, medId) => {
   const editUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE}/addedMeds/${medId}`;
   await axios.put(
     editUrl,
