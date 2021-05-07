@@ -30,7 +30,7 @@ const userMedsParentDiv = document.getElementById('home__userMeds--container');
 userMedsParentDiv.innerHTML =
   '<img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif" id="home-page-loading">';
 
-const renderMed = () => {
+const renderMeds = () => {
   state.userMeds.forEach((med) => {
     let medCard = document.createElement('div');
     medCard.className = 'med-card';
@@ -125,7 +125,7 @@ const onDeleteMed = async () => {
 const onComponentDidMount = async () => {
   await fetchUserMeds();
 
-  renderMed();
+  renderMeds();
 
   const loading = document.getElementById('home-page-loading');
   userMedsParentDiv.removeChild(loading);

@@ -13,33 +13,33 @@ const fetchAllMeds = async () => {
 };
 
 const allMedsParentDiv = document.getElementById('about__meds--container');
+
 allMedsParentDiv.innerHTML =
   '<img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif" id="about-page-loading">';
 
-const renderMed = () => {
-  state.queriedMeds.forEach((med) => {
-    let medCard = document.createElement('div');
-    medCard.className = 'med-card';
-    medCard.setAttribute('id', `med-card-${med.id}`);
+const renderMeds = () => {
+  allMedsParentDiv.innerHTML = state.queriedMeds
+    .map((med) => renderMed(med))
+    .join('');
+};
 
-    medCard.innerHTML = `
-    <h3>${med.fields.name}</h3>
-     <img
-        src="${med.fields.image}"
-        width="100"
-        height="50"
-        alt="${med.fields.name}"
-      />
+const renderMed = (med) => {
+  return `
+   <div class="med-card" id="med-card-${med.id}">
+     <h3>${med.fields.name}</h3>
+        <img
+          src="${med.fields.image}"
+          width="100"
+          height="50"
+          alt="${med.fields.name}"
+        />
+       </div>
     `;
-    allMedsParentDiv.appendChild(medCard);
-  });
 };
 
 const onComponentDidMount = async () => {
   await fetchAllMeds();
-
-  renderMed();
-
+  renderMeds();
   const loading = document.getElementById('about-page-loading');
   loading.parentNode.removeChild(loading);
 };
@@ -65,6 +65,5 @@ const handleChange = ({ target: { value } }) => {
 searchForm.addEventListener('input', handleChange);
 
 const onComponentDidUpdate = () => {
-  allMedsParentDiv.innerHTML = '';
-  renderMed();
+  renderMeds();
 };
