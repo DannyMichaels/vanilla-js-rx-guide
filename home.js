@@ -1,5 +1,4 @@
 let state = {
-  allMeds: [],
   userMeds: [],
 };
 
@@ -27,20 +26,12 @@ const fetchUserMeds = async () => {
   };
 };
 
-const fetchAllMeds = async () => {
-  const medData = await getAllMeds();
-  state = {
-    ...state,
-    allMeds: medData,
-  };
-};
-
 const userMedsParentDiv = document.getElementById('home__userMeds--container');
 userMedsParentDiv.innerHTML =
-  '<img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif" id="loading">';
+  '<img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif" id="home-page-loading">';
 
-const renderMed = (medType) => {
-  state[medType].forEach((med) => {
+const renderMed = () => {
+  state.userMeds.forEach((med) => {
     let medCard = document.createElement('div');
     medCard.className = 'med-card';
     medCard.setAttribute('id', `med-card-${med.id}`);
@@ -54,9 +45,7 @@ const renderMed = (medType) => {
         alt="${med.fields.name}"
       />
      
-     ${
-       medType === 'userMeds'
-         ? `
+    
       <div>
       <h4>Taken At: </h4>
         <h5 id="med-taken-${med.id}">${med.fields.taken}</h5>
@@ -79,9 +68,7 @@ const renderMed = (medType) => {
                 width="20px"
               />
       </button>
-      </div>`
-         : ''
-     }
+      </div>
     `;
     userMedsParentDiv.appendChild(medCard);
   });
@@ -135,16 +122,12 @@ const onDeleteMed = async () => {
   };
 };
 
-const onDocumentDidMount = async () => {
+const onComponentDidMount = async () => {
   await fetchUserMeds();
-  await fetchAllMeds();
-  state = {
-    ...state,
-  };
 
-  renderMed('userMeds');
+  renderMed();
 
-  const loading = document.getElementById('loading');
+  const loading = document.getElementById('home-page-loading');
   userMedsParentDiv.removeChild(loading);
 
   const editMedCardForm = document.getElementById('home__medCard--form');
@@ -154,14 +137,4 @@ const onDocumentDidMount = async () => {
   deleteMedBtn.addEventListener('click', onDeleteMed);
 };
 
-onDocumentDidMount();
-
-// const onDocumentWillUpdate = () => {
-//   // methods that should and will cause an update to the DOM.
-
-//   const rerenderUserMeds = () => {
-//     userMedsParentDiv.innerHTML = state.userMeds.map((med) => renderMed(med));
-//   };
-
-//   rerenderUserMeds();
-// };
+onComponentDidMount();
