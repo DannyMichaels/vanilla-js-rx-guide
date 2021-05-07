@@ -1,9 +1,26 @@
-const allMedsUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE}/prescriptions`;
+const BASE_URL = 'https://api.airtable.com/v0/';
+
+const allMedsUrl = `${BASE_URL}${AIRTABLE_BASE}/prescriptions`;
 
 //  global meds
 const getAllMeds = async () => {
   try {
     const response = await axios.get(allMedsUrl, {
+      headers: {
+        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+      },
+    });
+    return response.data.records;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getMedById = async (id) => {
+  const medByIdUrl = `${BASE_URL}${AIRTABLE_BASE}/prescriptions/${id}`;
+
+  try {
+    const response = await axios.get(medByIdUrl, {
       headers: {
         Authorization: `Bearer ${AIRTABLE_API_KEY}`,
       },
@@ -32,7 +49,7 @@ const createCustomMed = async (fields) => {
 };
 
 // user meds
-const userMedsUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE}/addedMeds`;
+const userMedsUrl = `${BASE_URL}${AIRTABLE_BASE}/addedMeds`;
 
 const getUserMeds = async () => {
   try {
@@ -65,7 +82,7 @@ const prescribeMed = async (fields) => {
 };
 
 const editUserMed = async (fields, medId) => {
-  const editUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE}/addedMeds/${medId}`;
+  const editUrl = `${BASE_URL}${AIRTABLE_BASE}/addedMeds/${medId}`;
   await axios.put(
     editUrl,
     { fields },
@@ -78,7 +95,7 @@ const editUserMed = async (fields, medId) => {
 };
 
 const deleteUserMed = async (medId) => {
-  const deleteUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE}/addedMeds/${medId}`;
+  const deleteUrl = `${BASE_URL}${AIRTABLE_BASE}/addedMeds/${medId}`;
   await axios.delete(deleteUrl, {
     headers: {
       Authorization: `Bearer ${AIRTABLE_API_KEY}`,
