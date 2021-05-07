@@ -4,11 +4,17 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>RX-Guide</title>
   </head>
   <body>
-    med detail
+    <a
+      style="cursor: pointer; text-decoration: underline"
+      onclick="window.history.back()"
+      >go back</a
+    >
 
+    <div id="medDetail__medContainer" class="inner-column"></div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="environment_variables.js"></script>
     <script src="services.js"></script>

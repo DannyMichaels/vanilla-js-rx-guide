@@ -18,14 +18,13 @@ const getAllMeds = async () => {
 
 const getMedById = async (id) => {
   const medByIdUrl = `${BASE_URL}${AIRTABLE_BASE}/prescriptions/${id}`;
-
   try {
     const response = await axios.get(medByIdUrl, {
       headers: {
         Authorization: `Bearer ${AIRTABLE_API_KEY}`,
       },
     });
-    return response.data.records;
+    return response.data;
   } catch (error) {
     throw error;
   }
