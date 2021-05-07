@@ -77,7 +77,7 @@ const editUserMed = async (fields, medId) => {
   );
 };
 
-const deleteMed = async (medId) => {
+const deleteUserMed = async (medId) => {
   const deleteUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE}/addedMeds/${medId}`;
   await axios.delete(deleteUrl, {
     headers: {

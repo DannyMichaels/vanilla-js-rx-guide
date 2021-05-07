@@ -55,7 +55,7 @@ button:before {
   }
 }
 
-button:hover {
+/* button:hover {
   animation: bounce 1s;
   cursor: pointer;
 }
@@ -74,4 +74,12 @@ button:hover {
 
 .custom-link:hover {
   animation: bounce 1s;
+} */
+
+#loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }

@@ -1,7 +1,6 @@
 let state = {
   allMeds: [],
   userMeds: [],
-  medsAreLoading: true,
 };
 
 const getSortedMeds = (meds) => {
@@ -36,15 +35,15 @@ const fetchAllMeds = async () => {
   };
 };
 
-const PrefillDOMWithMeds = (medType) => {
-  const userMedsParentDiv = document.getElementById(
-    'home__userMeds--container'
-  );
+const userMedsParentDiv = document.getElementById('home__userMeds--container');
+userMedsParentDiv.innerHTML =
+  '<img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif" id="loading">';
 
+const renderMed = (medType) => {
   state[medType].forEach((med) => {
     let medCard = document.createElement('div');
     medCard.className = 'med-card';
-    medCard.setAttribute('id', med.id);
+    medCard.setAttribute('id', `med-card-${med.id}`);
 
     medCard.innerHTML = `
     <h3>${med.fields.name}</h3>
@@ -73,7 +72,7 @@ const PrefillDOMWithMeds = (medType) => {
             <img src="https://i.imgur.com/SnXF0hi.png" alt="Edit" />
           </button>
       </form>
-      <button id="home__deleteMed--button">
+      <button id="home__deleteMed--button" data-id=${med.id}>
             <img
                 src="https://i.imgur.com/NhIlDPF.png"
                 alt="delete"
@@ -90,6 +89,7 @@ const PrefillDOMWithMeds = (medType) => {
 
 const onUpdateMed = (e) => {
   e.preventDefault();
+
   const editMedCardForm = document.getElementById('home__medCard--form');
   const timeTakenInput = editMedCardForm.querySelector('input[name="taken"]');
 
@@ -115,8 +115,24 @@ const onUpdateMed = (e) => {
   };
 
   const elementToChange = document.getElementById(`med-taken-${updatedMed.id}`);
-
   elementToChange.innerText = updatedMed.fields.taken;
+};
+
+const onDeleteMed = async () => {
+  const deleteMedBtn = document.getElementById('home__deleteMed--button');
+  const medToDelete = state.userMeds.find(
+    (med) => med.id === deleteMedBtn.dataset.id
+  );
+
+  const medCardToRemove = document.getElementById(`med-card-${medToDelete.id}`);
+  medCardToRemove.parentNode.removeChild(medCardToRemove);
+
+  await deleteUserMed(medToDelete.id);
+
+  state = {
+    ...state,
+    userMeds: state.userMeds.filter((med) => med.id !== medToDelete.id),
+  };
 };
 
 const onDocumentDidMount = async () => {
@@ -124,16 +140,28 @@ const onDocumentDidMount = async () => {
   await fetchAllMeds();
   state = {
     ...state,
-    medsAreLoading: false,
   };
 
-  PrefillDOMWithMeds('userMeds');
+  renderMed('userMeds');
+
+  const loading = document.getElementById('loading');
+  userMedsParentDiv.removeChild(loading);
+
   const editMedCardForm = document.getElementById('home__medCard--form');
+  const deleteMedBtn = document.getElementById('home__deleteMed--button');
+
   editMedCardForm.addEventListener('submit', onUpdateMed);
+  deleteMedBtn.addEventListener('click', onDeleteMed);
 };
 
 onDocumentDidMount();
 
-const onDocumentWillUpdate = () => {
-  // methods that should and will cause an update to the DOM.
-};
+// const onDocumentWillUpdate = () => {
+//   // methods that should and will cause an update to the DOM.
+
+//   const rerenderUserMeds = () => {
+//     userMedsParentDiv.innerHTML = state.userMeds.map((med) => renderMed(med));
+//   };
+
+//   rerenderUserMeds();
+// };
