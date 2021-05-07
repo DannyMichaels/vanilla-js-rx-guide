@@ -1,0 +1,40 @@
+@keyframes bounce {
+  0%,
+  20%,
+  60%,
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  40% {
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+  }
+
+  80% {
+    -webkit-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+}
+
+button:hover {
+  animation: bounce 1s;
+  cursor: pointer;
+}
+
+.li-button:hover {
+  animation: bounce 1s;
+  cursor: pointer;
+}
+.rxguide-logo:hover {
+  animation: bounce 1s;
+}
+
+.about:hover {
+  animation: bounce 1s;
+}
+
+.custom-link:hover {
+  animation: bounce 1s;
+}
