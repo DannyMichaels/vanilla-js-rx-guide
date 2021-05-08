@@ -1,6 +1,12 @@
 body {
   background-color: #fffcdc;
   background: linear-gradient(90deg, #ffefba, #fff);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+  margin-bottom: 120px;
+  align-items: center;
 }
 
 .inner-column {
@@ -45,6 +51,20 @@ button:before {
   top: 11px;
   left: -30px;
   transition: all 300ms ease;
+}
+
+.edit-button {
+  background: none;
+  border: none;
+}
+
+.edit-button:focus {
+  outline: none;
+}
+
+.edit-button img {
+  width: 30%;
+  height: 30%;
 }
 
 @keyframes bounce {
@@ -100,7 +120,8 @@ button:before {
 .search-input:focus {
   outline: none;
 }
-/* button:hover {
+
+button:hover {
   animation: bounce 1s;
   cursor: pointer;
 }
@@ -119,7 +140,7 @@ button:before {
 
 .custom-link:hover {
   animation: bounce 1s;
-} */
+}
 
 #loading {
   position: absolute;
@@ -138,4 +159,7 @@ footer {
   background: #feccff;
   box-shadow: 0px 0px 3.5px 5px peachpuff;
   z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 10px;
 }

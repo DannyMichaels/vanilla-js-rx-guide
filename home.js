@@ -50,18 +50,19 @@ const renderMeds = () => {
       <h4>Taken At: </h4>
         <h5 id="med-taken-${med.id}">${med.fields.taken}</h5>
       <form className="update-med" id="home__medCard--form" data-id=${med.id} >
-          <label htmlFor="taken" type="text">
+          <label for="taken" type="text">
             Edit Time:
           </label>
           <input
             name="taken"
             type="time"
           />
-          <button className="edit-button" id="home__editMed--button" type="submit">
+          <button class="edit-button" id="home__editMed--button" type="submit" style="margin-top: 20px;">
             <img src="https://i.imgur.com/SnXF0hi.png" alt="Edit" />
           </button>
       </form>
-      <button id="home__deleteMed--button" data-id=${med.id}>
+      
+      <button id="home__deleteMed--button" data-id=${med.id} class="edit-button" style="margin-top: 20px;">
             <img
                 src="https://i.imgur.com/NhIlDPF.png"
                 alt="delete"

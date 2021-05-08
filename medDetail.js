@@ -1,7 +1,3 @@
-let state = {
-  med: {},
-};
-
 const useParams = () => {
   const params = window.location.search;
   return window.location.search.replace(params[0], '');
@@ -28,10 +24,8 @@ const renderMed = (med) => {
 const onComponentDidMount = async () => {
   const medId = useParams();
   const oneMed = await getMedById(medId);
-  state.med = oneMed;
-
   const containerDiv = document.getElementById('medDetail__medContainer');
-  containerDiv.innerHTML = renderMed(state.med);
+  containerDiv.innerHTML = renderMed(oneMed);
 };
 
 onComponentDidMount();
