@@ -1,5 +1,6 @@
 let state = {
   userMeds: [],
+  allMeds: [],
 };
 
 const getSortedMeds = (meds) => {
@@ -16,6 +17,14 @@ const getSortedMeds = (meds) => {
     }
   });
   return sortedMeds;
+};
+
+const fetchAllMeds = async () => {
+  const medData = await getAllMeds();
+  state = {
+    ...state,
+    allMeds: medData,
+  };
 };
 
 const fetchUserMeds = async () => {
@@ -123,7 +132,37 @@ const onDeleteMed = async () => {
   };
 };
 
+const renderCreateMedForm = () => {
+  const form = document.getElementById('home__createMed');
+  form.innerHTML = `
+   <label for="name" type="text">
+        Name:
+      </label>
+      <select
+        className="select-css"
+        name="name"
+        type="text"
+        value={props.name}
+        ${state.allMeds
+          .map((med) => `<option>${med.fields.name}</option>`)
+          .join('')}
+      </select>
+
+      <label htmlFor="taken" type="text">
+        Taken At:
+      </label>
+      <input
+        name="taken"
+        type="time"
+        value={props.taken}
+      />
+  `;
+
+  console.log({ form });
+};
+
 const onComponentDidMount = async () => {
+  await fetchAllMeds();
   await fetchUserMeds();
 
   renderMeds();
@@ -136,6 +175,8 @@ const onComponentDidMount = async () => {
 
   editMedCardForm.addEventListener('submit', onUpdateMed);
   deleteMedBtn.addEventListener('click', onDeleteMed);
+
+  renderCreateMedForm();
 };
 
 onComponentDidMount();
