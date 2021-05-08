@@ -64,9 +64,10 @@ const getUserMeds = async () => {
 };
 
 const prescribeMed = async (fields) => {
+  const url = `https://api.airtable.com/v0/${AIRTABLE_BASE}/addedMeds`;
   try {
     const response = await axios.post(
-      userMedsUrl,
+      url,
       { fields },
       {
         headers: {
