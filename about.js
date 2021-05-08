@@ -42,8 +42,6 @@ const renderMed = (med) => {
 const onComponentDidMount = async () => {
   await fetchAllMeds();
   renderMeds();
-  const loading = document.getElementById('about-page-loading');
-  loading.parentNode.removeChild(loading);
 };
 
 onComponentDidMount();

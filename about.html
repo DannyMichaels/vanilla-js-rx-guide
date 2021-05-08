@@ -8,6 +8,28 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <header>
+      <div style="text-align: center">
+        <img
+          src="https://i.imgur.com/O014jTc.png"
+          width="350px"
+          height="300"
+          alt="Logo"
+        />
+      </div>
+
+      <div class="burger-btn" id="burger-btn">
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+      </div>
+
+      <ul class="menu-nav" id="navbar">
+        <div class="menu-links">
+          <li class="nav-link"><a href="/about.html">About</a></li>
+        </div>
+      </ul>
+    </header>
     <div class="about-text">
       <h1 style="text-shadow: 2px 2px peachpuff">About RXGuide:</h1>
       <p
@@ -25,7 +47,7 @@
 
     <div class="search-container">
       <form class="search-form" id="about__search--form">
-        <input type="search" class="search-input" />
+        <input type="search" class="search-input" placeholder="Search" />
       </form>
     </div>
 
@@ -45,7 +67,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="environment_variables.js"></script>
     <script src="services.js"></script>
-    <script async src="script.js"></script>
+    <script src="script.js"></script>
     <script async src="about.js"></script>
   </body>
 </html>
