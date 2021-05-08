@@ -1,6 +1,10 @@
 let state = {
   userMeds: [],
   allMeds: [],
+  formData: {
+    taken: '',
+    name: '',
+  },
 };
 
 const getSortedMeds = (meds) => {
@@ -84,6 +88,31 @@ const renderMeds = () => {
   });
 };
 
+const renderCreateMedForm = () => {
+  const form = document.getElementById('home__createMed');
+  form.innerHTML = `
+   <label for="name" type="text">
+        Name:
+      </label>
+      <select
+        className="select-css"
+        name="name"
+        type="text"
+        ${state.allMeds
+          .map((med) => `<option>${med.fields.name}</option>`)
+          .join('')}
+      </select>
+
+      <label htmlFor="taken" type="text">
+        Taken At:
+      </label>
+      <input
+        name="taken"
+        type="time"
+      />
+  `;
+};
+
 const onUpdateMed = (e) => {
   e.preventDefault();
 
@@ -132,35 +161,6 @@ const onDeleteMed = async () => {
   };
 };
 
-const renderCreateMedForm = () => {
-  const form = document.getElementById('home__createMed');
-  form.innerHTML = `
-   <label for="name" type="text">
-        Name:
-      </label>
-      <select
-        className="select-css"
-        name="name"
-        type="text"
-        value={props.name}
-        ${state.allMeds
-          .map((med) => `<option>${med.fields.name}</option>`)
-          .join('')}
-      </select>
-
-      <label htmlFor="taken" type="text">
-        Taken At:
-      </label>
-      <input
-        name="taken"
-        type="time"
-        value={props.taken}
-      />
-  `;
-
-  console.log({ form });
-};
-
 const onComponentDidMount = async () => {
   await fetchAllMeds();
   await fetchUserMeds();
@@ -172,7 +172,19 @@ const onComponentDidMount = async () => {
 
   const editMedCardForm = document.getElementById('home__medCard--form');
   const deleteMedBtn = document.getElementById('home__deleteMed--button');
+  const createMedForm = document.getElementById('home__createMed');
+  createMedForm.addEventListener('input', (e) => {
+    const { name, value } = e.target;
+    state = {
+      ...state,
+      formData: {
+        ...state.formData,
+        [name]: value,
+      },
+    };
 
+    console.log(state.formData);
+  });
   editMedCardForm.addEventListener('submit', onUpdateMed);
   deleteMedBtn.addEventListener('click', onDeleteMed);
 
