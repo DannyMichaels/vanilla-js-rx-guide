@@ -95,21 +95,31 @@ const renderCreateMedForm = () => {
         Name:
       </label>
       <select
-        className="select-css"
+        class="select-css"
         name="name"
         type="text"
+        id="home-select-med"
         ${state.allMeds
-          .map((med) => `<option>${med.fields.name}</option>`)
+          .map((med) => `<option value="${med.id}">${med.fields.name}</option>`)
           .join('')}
       </select>
 
-      <label htmlFor="taken" type="text">
+      <label for="taken" type="text">
         Taken At:
       </label>
       <input
         name="taken"
         type="time"
+        id="home-taken-input"
       />
+       <button type="Submit" class="edit-button">
+        <img
+        class="add"
+          style="width:50px; height: 50px;"
+          src="https://i.imgur.com/BZOV6FC.png"
+          alt="Submit"
+        />
+      </button>
   `;
 };
 
@@ -173,18 +183,30 @@ const onComponentDidMount = async () => {
   const editMedCardForm = document.getElementById('home__medCard--form');
   const deleteMedBtn = document.getElementById('home__deleteMed--button');
   const createMedForm = document.getElementById('home__createMed');
-  createMedForm.addEventListener('input', (e) => {
-    const { name, value } = e.target;
-    state = {
-      ...state,
-      formData: {
-        ...state.formData,
-        [name]: value,
+
+  createMedForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let medInput = document.getElementById('home-select-med');
+    let takenInput = document.getElementById('home-taken-input');
+
+    let medicine = state.allMeds.find((med) => med.id === medInput.value);
+
+    medicine = {
+      ...medicine,
+      fields: {
+        ...medicine.fields,
+        taken: takenInput.value,
       },
     };
 
-    console.log(state.formData);
+    state = {
+      ...state,
+      userMeds: [...state.userMeds, medicine],
+    };
+
+    console.log({ state });
   });
+
   editMedCardForm.addEventListener('submit', onUpdateMed);
   deleteMedBtn.addEventListener('click', onDeleteMed);
 
