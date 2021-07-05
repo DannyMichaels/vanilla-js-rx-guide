@@ -7,19 +7,4 @@ document.addEventListener('DOMContentLoaded', () => {
     navbar.classList.toggle('active');
   };
   burgerBtn.addEventListener('click', toggleBurgerOpen);
-
-  class Context {
-    constructor() {
-      this.store = {
-        allMeds: [],
-        userMeds: [],
-      };
-
-      this.setState = (state) => (newValue) => {
-        this.store[state] = newValue;
-      };
-    }
-  }
-
-  let store = new Context();
 });
